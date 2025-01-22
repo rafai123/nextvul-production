@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import Link from "next/link"
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -75,16 +76,6 @@ export const SignInCard = () => {
                 </FormItem>
               )}
             />
-            {/* <Input 
-              required
-              type="password"
-              value={""}
-              onChange={() => {}}
-              placeholder="Enter password address"
-              disabled={false}
-              min={8}
-              max={256}
-            /> */}
             <Button disabled={false} size={"lg"} className="w-full">
               Login
             </Button>
@@ -113,6 +104,17 @@ export const SignInCard = () => {
           <FaGithub className="mr-2 size-4" />
           Login with Github
         </Button>
+      </CardContent>
+      <div className="px-7">
+        <DottedSeparator />
+      </div>
+      <CardContent className="p-7 flex items-center justify-center">
+        <p>
+          Don&apos;t have an account?{" "}
+          <Link href={"/sign-up"}>
+            <span className="text-blue-700">Sign Up</span>
+          </Link>
+        </p>
       </CardContent>
     </Card>
   )
