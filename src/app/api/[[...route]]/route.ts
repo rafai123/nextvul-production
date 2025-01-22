@@ -9,4 +9,13 @@ app.get("/hello", c => {
   })
 })
 
+app.get("/project/:projectId", c => {
+  
+  const projectId = c.req.param("projectId")
+
+  return c.json({
+    projectId: projectId
+  })
+})
+
 export const GET = handle(app)
