@@ -1,3 +1,5 @@
+"use client"
+
 import { DottedSeparator } from "@/components/dotted-separator"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
