@@ -6,6 +6,7 @@ import { createAdminClient } from "@/lib/appwrite";
 import { ID } from "node-appwrite";
 import { deleteCookie, setCookie } from "hono/cookie"
 import { AUTH_COOKIE } from "../constants";
+import { sessionMiddleware } from "@/lib/session-middleware";
 
 const app = new Hono()
   .post("/login", 
@@ -66,7 +67,9 @@ const app = new Hono()
       })
     }
   )
-  .post("/logout", (c) => {
+  .post("/logout", sessionMiddleware, (c) => {
+    const account = c.get("account")
+
     deleteCookie(c, AUTH_COOKIE)
 
     return c.json({
