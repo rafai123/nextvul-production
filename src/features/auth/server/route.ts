@@ -4,7 +4,7 @@ import { z } from "zod";
 import { loginSchema, registerSchema } from "../schemas";
 import { createAdminClient } from "@/lib/appwrite";
 import { ID } from "node-appwrite";
-import { setCookie } from "hono/cookie"
+import { deleteCookie, setCookie } from "hono/cookie"
 import { AUTH_COOKIE } from "../constants";
 
 const app = new Hono()
@@ -66,5 +66,12 @@ const app = new Hono()
       })
     }
   )
+  .post("/logout", (c) => {
+    deleteCookie(c, AUTH_COOKIE)
+
+    return c.json({
+      success: true
+    })
+  })
 
 export default app
