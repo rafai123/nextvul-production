@@ -1,0 +1,1 @@
+export const AUTH_COOKIE = "nextvul-production-session"
