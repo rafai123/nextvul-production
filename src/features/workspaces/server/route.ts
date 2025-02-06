@@ -9,6 +9,16 @@ import { createWorkspaceSchema } from "../schemas";
 import { ID } from "node-appwrite";
 
 const app = new Hono()
+  .get("/", sessionMiddleware, async (c) => {
+    const database = c.get("databases")
+
+    const workspaces = await database.listDocuments(
+      DATABASE_ID,
+      WORKSPACES_ID
+    )
+
+    return c.json({ data: workspaces })
+  })
   .post(
     "/", // -> /workspaces
     zValidator("form", createWorkspaceSchema),
