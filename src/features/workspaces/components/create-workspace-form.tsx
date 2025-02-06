@@ -10,7 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useCreateWorkspace } from "../api/use-create-workspace";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import Image from "next/image";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ImageIcon } from "lucide-react";
@@ -35,7 +35,25 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
   // const onSubmit = (values: z.infer <typeof createWorkspaceSchema>) => {
   const onSubmit = (values: z.infer <typeof createWorkspaceSchema>) => {
     console.log({values})
-    mutate({json : values})
+
+    const finalValues = {
+      ...values,
+      image: values.image instanceof File ? values.image : ""
+    }
+
+    mutate({form : finalValues}, {
+      onSuccess: () => {
+        form.reset()
+        // TODO: Redorect to new workspace
+      }
+    })
+  }
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      form.setValue("image", file)
+    }
   }
 
   return (
@@ -96,6 +114,30 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                             </AvatarFallback>
                           </Avatar>
                         )}
+                        <div className="flex flex-col">
+                          <p className="text-sm ">Workspace Icon</p>
+                          <p className="text-sm text-muted-foreground">
+                            JPG, PNG, SVG or JPEG max 1mb
+                          </p>
+                          <input 
+                            className="hidden"
+                            type="file"
+                            accept=".jpg, .png, .svg, .jpeg"
+                            ref={inputRef}
+                            disabled={isPending}
+                            onChange={handleImageChange}
+                          />
+                          <Button
+                            type="button"
+                            disabled={isPending}
+                            variant={"secondary"}
+                            size={"sm"}
+                            className="w-fit mt-2"
+                            onClick={() => inputRef.current?.click()}
+                          >
+                            Upload Image
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   )}
