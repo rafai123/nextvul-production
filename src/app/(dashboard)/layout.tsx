@@ -1,4 +1,4 @@
-import { CreateWorkspaceModal } from "@/components/create-workspace-modal";
+import { CreateWorkspaceModal } from "@/features/workspaces/components/create-workspace-modal";
 import { Navbar } from "@/components/navbar";
 import { Sidebar } from "@/components/sidebar";
 
@@ -17,14 +17,12 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <div className="lg:pl-[264px] w-full">
           <div className="mx-auto max-w-screen-2xl h-full">
             <Navbar />
-            <main className="h-full py-8 px-6 flex flex-col">
-              {children}
-            </main>
+            <main className="h-full py-8 px-6 flex flex-col">{children}</main>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;
