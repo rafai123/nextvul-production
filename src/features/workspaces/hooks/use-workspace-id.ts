@@ -13,7 +13,8 @@ export const useWorkspaceId = () => {
     }
   }, [params.workspaceId]); // Akan trigger setiap kali params.workspaceId berubah
 
-  return workspaceId;
+  return workspaceId as string;
+  // return params.useWorkspaceId as string
 };
 
 
