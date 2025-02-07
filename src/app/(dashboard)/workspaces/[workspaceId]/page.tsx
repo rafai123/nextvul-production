@@ -8,7 +8,7 @@ const WorkspaceIdPage = () => {
   return (
     <div>
       <p>{workspaceId}</p>
-      <CreateWorkspaceForm />
+      {/* <CreateWorkspaceForm /> */}
     </div>
   )
 }
