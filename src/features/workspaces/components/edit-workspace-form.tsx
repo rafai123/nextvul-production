@@ -18,6 +18,8 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Workspace } from "../types";
 import { useUpdateWorkspace } from "../api/use-update-workspace";
+import { useConfirm } from "@/hooks/use-confirm";
+import { useDeleteWorkspace } from "../api/use-delete-workspace";
 
 interface EditWorkspaceFormProps {
   onCancel?: () => void;
@@ -26,8 +28,34 @@ interface EditWorkspaceFormProps {
 
 export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceFormProps) => {
   const router = useRouter()
-
   const { mutate, isPending } = useUpdateWorkspace()
+  const { 
+    mutate: deleteWorkspace,
+    isPending: isDeletingWorkspace
+  } = useDeleteWorkspace()
+
+  const [DeleteDialog, confirmDelete] = useConfirm(
+    "Delete Workspace",
+    "This action cannot be undone.",
+    "destructive"
+  )
+
+  const handleDelete = async () => {
+    const ok = await confirmDelete()
+
+    if (!ok) return;
+
+    console.log("Delete workspace")
+    deleteWorkspace({
+      param: { workspaceId : initialValues.$id }
+    },
+    {
+      onSuccess: () => {
+        // router.push("/")
+        window.location.href = "/"
+      }
+    })
+  }
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -70,6 +98,7 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
 
   return (
     <div className="flex flex-col gap-y-4">
+      <DeleteDialog />
       <Card className="h-full w-full border-none shadow-none">
         <CardHeader className="flex flex-row items-center gap-x-4 p-7 space-y-0">
           <Button type="button" variant={"secondary"} onClick={onCancel ? onCancel : () => router.push(`/workspaces/${initialValues.$id}`)}>
@@ -215,8 +244,8 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
               type="button" 
               variant={"destructive"} 
               size={"sm"} 
-              disabled={isPending} 
-              onClick={() => {}}
+              disabled={isPending || isDeletingWorkspace} 
+              onClick={handleDelete}
             >
               Delete Workspace
             </Button>
