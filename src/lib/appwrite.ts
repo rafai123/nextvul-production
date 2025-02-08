@@ -11,9 +11,10 @@ import { cookies } from "next/headers"
 import { AUTH_COOKIE } from "@/features/auth/constants"
 
 export async function createSessionClient() {
+  
   const client = new Client()
-    .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
-    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!)
+  .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
+  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!)
 
   const session = (await cookies()).get(AUTH_COOKIE)
 
