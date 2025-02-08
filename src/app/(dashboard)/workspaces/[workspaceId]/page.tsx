@@ -5,13 +5,13 @@ import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id"
 import { redirect } from "next/navigation"
 
 const WorkspaceIdPage = async () => {
-  const workspaceId = useWorkspaceId()
+  // const workspaceId = useWorkspaceId()
   const user = await getCurrent()
   if (!user) redirect("/sign-in")
 
   return (
     <div>
-      <p>{workspaceId}</p>
+      <p>workspaceId</p>
       {/* <CreateWorkspaceForm /> */}
     </div>
   )
