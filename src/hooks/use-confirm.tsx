@@ -22,7 +22,7 @@ export const useConfirm = ( title: string, message: string, variant: ButtonProps
   }
 
   const handleCancel = () => {
-    promise?.resolve(true)
+    promise?.resolve(false)
     handleClose()
   }
 
