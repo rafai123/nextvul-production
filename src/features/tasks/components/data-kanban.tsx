@@ -138,6 +138,8 @@ export const DataKanban = ({ data, onChange }: DataKanbanProps) => {
         })
       }
 
+      onChange(updatesPayload)
+
       return newTasks
     })
   }, [])

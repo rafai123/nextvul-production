@@ -4,7 +4,7 @@ import { DottedSeparator } from '@/components/dotted-separator'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsTrigger, TabsList, TabsContent } from '@/components/ui/tabs'
 import { Loader, PlusIcon } from 'lucide-react'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useCreateTaskModal } from '../hooks/use-create-task-modal'
 import { useGetTasks } from '../api/use-get-tasks'
 import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
@@ -14,18 +14,26 @@ import { useTaskFilters } from '../hooks/use-task-filters'
 import { DataTable } from './data-table'
 import { columns } from './column'
 import { DataKanban } from './data-kanban'
+import { TaskStatus } from '../types'
+import { useBulkUpdateTasks } from '../api/use-bulk-update-tasks'
 
 const TaskViewSwitcher = () => {
+
   const [{
     status,
     assigneeId,
     projectId,
     dueDate,
   }] = useTaskFilters()
+
   const [view, setView] = useQueryState("task-view", {
     defaultValue: "table",
   })
+
   const workspaceId = useWorkspaceId()
+
+  const { mutate: bulkUpdate } = useBulkUpdateTasks()
+
   const { 
     data: tasks, 
     isLoading: isLoadingTasks 
@@ -38,6 +46,11 @@ const TaskViewSwitcher = () => {
   })
 
   const { open } = useCreateTaskModal()
+
+  const onKanbanChange = useCallback((tasks: { $id: string; status: TaskStatus; position: number }[]) => {
+    console.log({tasks})
+    bulkUpdate({ json: { tasks } })
+  }, [bulkUpdate])
 
   return (
     <Tabs defaultValue={view} onValueChange={setView} className='flex-1 w-full border rounded-lg'>
@@ -86,7 +99,7 @@ const TaskViewSwitcher = () => {
               <DataTable columns={columns} data={tasks?.documents ?? []} />
             </TabsContent>
             <TabsContent value='kanban' className='mt-0'>
-              <DataKanban data={tasks?.documents || []} />
+              <DataKanban data={tasks?.documents || []} onChange={onKanbanChange} />
             </TabsContent>
             <TabsContent value='calendar' className='mt-0'>
               {JSON.stringify(tasks)}
