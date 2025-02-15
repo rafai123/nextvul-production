@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Task, TaskStatus } from "../types";
 
 import { DragDropContext, Draggable, type DropResult, Droppable } from "@hello-pangea/dnd"
@@ -19,9 +19,10 @@ type TaskState = {
 
 interface DataKanbanProps {
   data: Task[];
+  onChange: (tasks: { $id: string; status: TaskStatus; position: number }[]) => void
 }
 
-export const DataKanban = ({ data }: DataKanbanProps) => {
+export const DataKanban = ({ data, onChange }: DataKanbanProps) => {
 
   const [tasks, setTasks] = useState<TaskState>(() => {
     const initialTasks: TaskState = {
@@ -42,6 +43,26 @@ export const DataKanban = ({ data }: DataKanbanProps) => {
 
     return initialTasks
   })
+
+  useEffect(() => {
+    const newTasks: TaskState = {
+      [TaskStatus.BACKLOG]: [],
+      [TaskStatus.TODO]: [],
+      [TaskStatus.IN_PROGRESS]: [],
+      [TaskStatus.IN_REVIEW]: [],
+      [TaskStatus.DONE]: [],
+    }
+
+    data.forEach(task => {
+      newTasks[task.status].push(task)
+    })
+
+    Object.keys(newTasks).forEach(status => {
+      newTasks[status as TaskStatus].sort((a, b) => a.position - b.position)
+    })
+
+    setTasks(newTasks)
+  }, [data])
 
   const onDragEnd = useCallback((result: DropResult) => {
     if (!result.destination) return;
@@ -122,7 +143,7 @@ export const DataKanban = ({ data }: DataKanbanProps) => {
   }, [])
 
   return (
-    <DragDropContext onDragEnd={() => {}}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <div className="flex overflow-x-auto">
         {boards.map((board) => {
           return (
