@@ -9,7 +9,7 @@ import { DottedSeparator } from "@/components/dotted-separator";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useCreateWorkspace } from "../api/use-create-workspace";
+
 import React, { useRef } from "react";
 import Image from "next/image";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -106,13 +106,6 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
     mutate({
       form : finalValues,
       param: { workspaceId: initialValues.$id }
-    }, {
-      onSuccess: ({ data }) => {
-        form.reset()
-        // onCancel?.()
-        // TODO: Redorect to new workspace
-        // router.push(`/workspaces/${data.$id}`)
-      }
     })
   }
 
