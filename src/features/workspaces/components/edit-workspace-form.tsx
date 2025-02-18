@@ -56,7 +56,6 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
 
     if (!ok) return;
 
-    console.log("Delete workspace")
     deleteWorkspace({
       param: { workspaceId : initialValues.$id }
     },
@@ -71,7 +70,6 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
     const ok = await confirmReset()
     if (!ok) return;
 
-    console.log("Reset Invite Code")
     resetInviteCode({
       param: { workspaceId : initialValues.$id }
     })
@@ -89,7 +87,6 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
 
   // const onSubmit = (values: z.infer <typeof updateWorkspaceSchema>) => {
   const onSubmit = (values: z.infer <typeof updateWorkspaceSchema>) => {
-    console.log({values})
 
     const finalValues = {
       ...values,

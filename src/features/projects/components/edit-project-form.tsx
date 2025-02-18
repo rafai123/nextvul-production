@@ -50,7 +50,6 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProp
 
     if (!ok) return;
 
-    console.log("Delete workspace")
     deleteProject({
       param: { projectId : initialValues.$id }
     },
@@ -74,7 +73,6 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProp
 
   // const onSubmit = (values: z.infer <typeof updateProjectSchema>) => {
   const onSubmit = (values: z.infer <typeof updateProjectSchema>) => {
-    console.log({values})
 
     const finalValues = {
       ...values,

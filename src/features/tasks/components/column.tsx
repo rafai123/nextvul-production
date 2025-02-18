@@ -47,7 +47,6 @@ export const columns: ColumnDef<Task>[] = [
     },
     cell: ({ row }) => {
       const project = row.original.project
-      console.log({project})
 
       return (
         <div className="flex items-center gap-x-2 text-sm font-medium">
@@ -76,8 +75,6 @@ export const columns: ColumnDef<Task>[] = [
     },
     cell: ({ row }) => {
       const assignee = row.original.assignee;
-      console.log({ assignee });
-      console.log(assignee?.name);
     
       return (
         <div className="flex items-center gap-x-2 text-sm font-medium">
@@ -112,7 +109,6 @@ export const columns: ColumnDef<Task>[] = [
     },
     cell: ({ row }) => {
       const dueDate = row.original.dueDate;
-      console.log({ dueDate });
     
       return (
         <TaskDate value={dueDate} />

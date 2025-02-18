@@ -1,7 +1,7 @@
 import { client } from "@/lib/rpc";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
-import { useRouter } from "next/navigation";
+
 import { toast } from "sonner";
 
 type ResponseType = InferResponseType<typeof client.api.projects["$post"], 200> // fetch: api/workspace method POST
@@ -9,7 +9,6 @@ type RequestType = InferRequestType<typeof client.api.projects["$post"]>
 
 export const useCreateProject = () => {
   const queryClient = useQueryClient()
-  const router = useRouter()
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ form }) => { 

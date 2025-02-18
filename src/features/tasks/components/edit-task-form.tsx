@@ -1,25 +1,30 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { createTaskSchema } from "../schemas";
+
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { createTaskSchema } from "../schemas";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DottedSeparator } from "@/components/dotted-separator";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import React from "react";
-import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
-
-import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { DatePicker } from "@/components/date-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+import { cn } from "@/lib/utils";
+
+// import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { MemberAvatar } from "@/features/members/components/member-avatar";
-import { Task, TaskStatus } from "../types";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
+
 import { useUpdateTask } from "../api/use-update-task";
+
+import { Task, TaskStatus } from "../types";
 
 interface EditTaskFormProps {
   onCancel?: () => void;
@@ -29,8 +34,7 @@ interface EditTaskFormProps {
 }
 
 export const EditTaskForm = ({ onCancel, memberOptions, projectOptions, initialValues }: EditTaskFormProps) => {
-  const workspaceId = useWorkspaceId()
-  const router = useRouter()
+  // const workspaceId = useWorkspaceId()
   const { mutate, isPending } = useUpdateTask()
 
   const form = useForm<z.infer <typeof createTaskSchema>>({
@@ -43,8 +47,6 @@ export const EditTaskForm = ({ onCancel, memberOptions, projectOptions, initialV
 
   // const onSubmit = (values: z.infer <typeof createTaskSchema>) => {
   const onSubmit = (values: z.infer <typeof createTaskSchema>) => {
-    console.log({values})
-    console.log("submit")
 
     mutate({json : values, param: { taskId: initialValues.$id }}, {
       onSuccess: () => {

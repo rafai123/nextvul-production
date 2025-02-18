@@ -37,8 +37,7 @@ export const CreateProjectForm = ({ onCancel }: CreateProjectFormProps) => {
 
   // const onSubmit = (values: z.infer <typeof createProjectSchema>) => {
   const onSubmit = (values: z.infer <typeof createProjectSchema>) => {
-    console.log({values})
-
+    
     const finalValues = {
       ...values,
       workspaceId,

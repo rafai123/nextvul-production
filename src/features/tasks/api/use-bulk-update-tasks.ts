@@ -12,7 +12,6 @@ export const useBulkUpdateTasks = () => {
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json }) => { 
       const response = await client.api.tasks["bulk-update"]["$post"]({ json })
-      console.log(response)
 
       if (!response.ok) {
         throw new Error("Failed to update task")

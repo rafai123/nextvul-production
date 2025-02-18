@@ -35,8 +35,6 @@ const app = new Hono()
         maxAge: 60 * 60 * 24 * 30
       })
 
-      console.log({email, password})
-
       return c.json({
         success: true
       })
@@ -66,8 +64,6 @@ const app = new Hono()
         sameSite: "strict",
         maxAge: 60 * 60 * 24 * 30
       })
-
-      console.log({email, password})
 
       return c.json({
         success: true

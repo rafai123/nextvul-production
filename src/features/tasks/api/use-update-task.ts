@@ -13,7 +13,6 @@ export const useUpdateTask = () => {
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ param, json }) => { 
       const response = await client.api.tasks[":taskId"]["$patch"]({ param, json })
-      console.log(response)
 
       if (!response.ok) {
         throw new Error("Failed to update task")
