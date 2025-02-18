@@ -17,11 +17,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-import { ArrowLeft, CopyIcon, ImageIcon } from "lucide-react";
+import { ArrowLeft,ImageIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Project } from "../types";
-import { toast } from "sonner";
 
 import { useUpdateProject } from "../api/use-update-project";
 import { updateProjectSchema } from "../schemas";
@@ -85,10 +84,6 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProp
     mutate({
       form : finalValues,
       param: { projectId: initialValues.$id }
-    }, {
-      onSuccess: ({ data }) => {
-        form.reset()
-      }
     })
   }
 
@@ -249,7 +244,7 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProp
               type="button" 
               variant={"destructive"} 
               size={"sm"} 
-              disabled={isPending} 
+              disabled={isPending || isDeletingProject} 
               onClick={handleDelete}
             >
               Delete Project    
