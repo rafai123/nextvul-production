@@ -1,7 +1,7 @@
 import { getCurrent } from "@/features/auth/queries";
-import { CreateWorkspaceForm } from "@/features/workspaces/components/create-workspace-form";
-import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+
 import { redirect } from "next/navigation";
+import { WorkspaceIdClient } from "./client";
 
 const WorkspaceIdPage = async () => {
   // const workspaceId = useWorkspaceId()
@@ -9,10 +9,7 @@ const WorkspaceIdPage = async () => {
   if (!user) redirect("/sign-in");
 
   return (
-    <div>
-      <p>workspaceId</p>
-      {/* <CreateWorkspaceForm /> */}
-    </div>
+    <WorkspaceIdClient />
   );
 };
 
