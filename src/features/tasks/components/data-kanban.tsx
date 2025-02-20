@@ -142,7 +142,7 @@ export const DataKanban = ({ data, onChange }: DataKanbanProps) => {
 
       return newTasks
     })
-  }, [])
+  }, [ onChange ])
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
