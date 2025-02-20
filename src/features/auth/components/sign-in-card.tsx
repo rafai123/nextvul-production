@@ -16,6 +16,8 @@ import Link from "next/link"
 import { loginSchema } from "../schemas"
 import { useLogin } from "../api/use-login"
 
+import { signUpWithGithub } from "@/lib/oauth"
+
 export const SignInCard = () => {
 
   const { mutate, isPending } = useLogin()
@@ -99,6 +101,7 @@ export const SignInCard = () => {
           Login with Google
         </Button>
         <Button 
+          onClick={() => signUpWithGithub()}
           disabled={isPending}
           variant={"secondary"}
           size={"lg"}
