@@ -1,22 +1,29 @@
 "use client"
 
+import React, { useCallback } from 'react'
+import { useQueryState } from 'nuqs'
+import { Loader, PlusIcon } from 'lucide-react'
+
 import { DottedSeparator } from '@/components/dotted-separator'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsTrigger, TabsList, TabsContent } from '@/components/ui/tabs'
-import { Loader, PlusIcon } from 'lucide-react'
-import React, { useCallback } from 'react'
+
 import { useCreateTaskModal } from '../hooks/use-create-task-modal'
-import { useGetTasks } from '../api/use-get-tasks'
-import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
-import { useQueryState } from 'nuqs'
-import { DataFilters } from './data-filters'
 import { useTaskFilters } from '../hooks/use-task-filters'
+
+import { useGetTasks } from '../api/use-get-tasks'
+import { useBulkUpdateTasks } from '../api/use-bulk-update-tasks'
+
+import { DataFilters } from './data-filters'
 import { DataTable } from './data-table'
 import { columns } from './column'
 import { DataKanban } from './data-kanban'
-import { TaskStatus } from '../types'
-import { useBulkUpdateTasks } from '../api/use-bulk-update-tasks'
 import { DataCalendar } from './data-calendar'
+import { TaskStatus } from '../types'
+
+
+import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id'
+import { useProjectId } from '@/features/projects/hooks/use-project-id'
 
 interface TaskViewSwitcherProps {
   hideProjectFilter?: boolean
@@ -36,6 +43,7 @@ const TaskViewSwitcher = ({ hideProjectFilter }: TaskViewSwitcherProps) => {
   })
 
   const workspaceId = useWorkspaceId()
+  const paramProjectId = useProjectId()
 
   const { mutate: bulkUpdate } = useBulkUpdateTasks()
 
@@ -46,7 +54,7 @@ const TaskViewSwitcher = ({ hideProjectFilter }: TaskViewSwitcherProps) => {
     workspaceId,
     status,
     assigneeId,
-    projectId,
+    projectId: paramProjectId || projectId,
     dueDate,
   })
 
