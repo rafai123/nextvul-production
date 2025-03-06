@@ -46,8 +46,12 @@ export const columns: ColumnDef<Task>[] = [
       )
     },
     cell: ({ row }) => {
-      const project = row.original.project
-
+      const project = row.original.project;
+    
+      if (!project) {
+        return <p className="text-gray-500">No Project</p>;
+      }
+    
       return (
         <div className="flex items-center gap-x-2 text-sm font-medium">
           <ProjectAvatar 
@@ -57,9 +61,9 @@ export const columns: ColumnDef<Task>[] = [
           />
           <p className="line-clamp-1">{project.name}</p>
         </div>
-      )
+      );
     }
-  },
+  },    
   {
     accessorKey: "assignee",
     header: ({ column }) => {

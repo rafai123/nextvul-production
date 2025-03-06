@@ -1,4 +1,4 @@
-import { client } from "@/lib/rpc";
+import { client } from "@/lib/rpc"; // axios
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 
@@ -7,6 +7,8 @@ import { toast } from "sonner";
 type ResponseType = InferResponseType<typeof client.api.tasks["$post"], 200> // fetch: api/workspace method POST
 type RequestType = InferRequestType<typeof client.api.tasks["$post"]>
 
+// const daftarTasks = await useCreateTask()
+// daftarTask
 export const useCreateTask = () => {
   const queryClient = useQueryClient()
 
@@ -22,7 +24,7 @@ export const useCreateTask = () => {
     },
     onSuccess: () => {
       toast.success("Task Created")
-      queryClient.invalidateQueries({ queryKey: ["tasks"] })
+      queryClient.invalidateQueries({ queryKey: ["tasks", "dataAlfito"] })
     },
     onError: () => {
       toast.error("Failed to create task")
